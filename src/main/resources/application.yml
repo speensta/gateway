@@ -26,7 +26,7 @@ spring:
             - Path=/user-service/login
             - Method=POST
           filters:
-            - RemoveRequetHeader=Cookie
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: userapp
           uri: lb://USERAPP
@@ -34,7 +34,7 @@ spring:
             - Path=/user-service/user
             - Method=POST
           filters:
-            - RemoveRequetHeader=Cookie
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: userapp
           uri: lb://USERAPP
@@ -42,8 +42,9 @@ spring:
             - Path=/user-service/**
             - Method=GET
           filters:
-            - RemoveRequetHeader=Cookie
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthenzationHeaderFilter
         - id: catalog
           uri: lb://CATALOG
           predicates:
@@ -73,3 +74,8 @@ spring:
                 baseMessage: Spring Cloud Gateway Logging Filter
                 preLogger: true
                 postLogger: true
+
+
+token:
+  expiration: 3640000
+  secret: testtesttestetsttesttesttestetsttesttesttestetsttesttesttestetst
